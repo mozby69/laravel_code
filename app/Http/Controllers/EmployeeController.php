@@ -13,8 +13,6 @@ class EmployeeController extends Controller
         return view('employees.index', compact('employees'));
     }
 
-
-
     public function store(Request $request)
     {
         $request->validate([
@@ -40,19 +38,17 @@ class EmployeeController extends Controller
         $employee = Employee::findOrFail($id);
         $employee->update($request->all());
 
+        // if ($request->ajax()) {
+        //     return response()->json(['success' => true]);
+        // }
 
-        return response()->json([
-            'success' => true,
-            'employee' => $employee,
-            ]);
-
-        // return redirect()->route('employees.index')
-        //     ->with('success', 'Employee updated successfully.');
+        return redirect()->route('employees.index')
+            ->with('success', 'Employee updated successfully.');
     }
 
     public function destroy($id){
-    $employee = Employee::findOrFail($id);
-    $employee->delete();
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
 
     return redirect()->route('employees.index')
         ->with('success', 'Employee deleted successfully.');

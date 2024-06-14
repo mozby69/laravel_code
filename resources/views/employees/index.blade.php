@@ -5,8 +5,14 @@
     <title>Employees</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- SweetAlert CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+        <!-- Include SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.24/sweetalert2.min.css">
+
+    <!-- Include SweetAlert JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.24/sweetalert2.all.min.js"></script>
+
 
 </head>
 <body>
@@ -23,6 +29,7 @@
                             <tr>
                                 <th>FIRSTNAME</th>
                                 <th>MIDDLENAME</th>
+                                <th>ACTIONS</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,16 +47,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -79,6 +76,8 @@
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>
+
+              
                 </div>
             </div>
         </div>
@@ -156,62 +155,8 @@
 
 
 
-
-<script>
-    $(document).ready(function() {
-        $('.edit-employee-btn').click(function() {
-            let employeeId = $(this).data('employee-id');
-            let fetchEmployeeRoute = "{{ route('employees.update', ':id') }}";
-            fetchEmployeeRoute = fetchEmployeeRoute.replace(':id', employeeId);
-
-            // Handle form submission (assuming you want to update via form)
-            $('#editForm').submit(function(event) {
-                event.preventDefault(); // Prevent default form submission
-
-                // Send AJAX request to update employee data
-                $.ajax({
-                    url: fetchEmployeeRoute,
-                    method: 'POST',
-                    data: $(this).serialize(), // Get form data
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            // Handle successful update (e.g., close modal, show success message with SweetAlert)
-                            $('#edit_record_' + employeeId).modal('hide');
-                            Swal.fire({
-                                title: 'Success!',
-                                text: 'Employee updated successfully!',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            });
-                        } else {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'Error updating employee: ' + response.message,
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    },
-                    error: function(error) {
-                        console.error('Error:', error);
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'An error occurred. Please try again.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                });
-            });
-        });
-    });
-</script>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
 </body>
 </html>
