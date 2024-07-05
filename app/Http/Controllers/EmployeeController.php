@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
-class EmployeeController extends Controller
-{
-    public function index()
-    {
+
+
+class EmployeeController extends Controller {
+
+    
+    public function index(){
         $employees = Employee::all();
         return view('employees.index', compact('employees'));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $request->validate([
             'firstname' => 'required|string|max:255',
             'middlename' => 'nullable|string|max:255',
@@ -28,8 +29,7 @@ class EmployeeController extends Controller
 
 
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $request->validate([
             'firstname' => 'required|string|max:255',
             'middlename' => 'nullable|string|max:255',
@@ -38,9 +38,9 @@ class EmployeeController extends Controller
         $employee = Employee::findOrFail($id);
         $employee->update($request->all());
 
-        // if ($request->ajax()) {
-        //     return response()->json(['success' => true]);
-        // }
+        if ($request->ajax()) {
+            return response()->json(['success' => true]);
+        }
 
         return redirect()->route('employees.index')
             ->with('success', 'Employee updated successfully.');
@@ -55,3 +55,6 @@ class EmployeeController extends Controller
     }
 
 }
+
+
+
